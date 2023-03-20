@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, PermissionsAndroid, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, PermissionsAndroid, Platform, ScrollView } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import 'firebase/compat/firestore';
-import 'firebase/compat/storage';
-import { app, db } from './firebase'
+import CameraImage from './CameraImage';
+import { db } from './firebase';
+
+
 
 
 export default function Tab2() {
 
     const [cameraImage, setCameraImage] = useState(null);
-    const [galleryImage, setGalleryImage] = useState(null);
     const [photos, setPhotos] = useState([]);
+
+
 
 
     const options = {
@@ -23,14 +25,31 @@ export default function Tab2() {
         },
     }
 
+    const imageUrlsCollection = db.collection('imageUrls');
 
     useEffect(() => {
-        const unsubscribe = db.collection('photos').onSnapshot((snapshot) => {
-            const photos = snapshot.docs.map((doc) => doc.data());
-            setPhotos(photos);
+        // Add a new document to the collection with a URL field
+        imageUrlsCollection.add({
+            url: cameraImage
+        }).then((docRef) => {
+        }).catch((error) => {
+            console.error('Error adding document: ', error);
         });
-        return () => unsubscribe();
+        setCameraImage(null);
     }, []);
+
+
+    useEffect(() => {
+
+
+        imageUrlsCollection.onSnapshot(snapshot => {
+            setPhotos(snapshot.docs.map(doc => ({ id: doc.id, url: doc.data().url })))
+        })
+    }, []);
+
+
+
+
 
 
     const openCamera = async () => {
@@ -44,24 +63,14 @@ export default function Tab2() {
 
                 if (granted == PermissionsAndroid.RESULTS.GRANTED) {
 
-                    await launchCamera(options, (response) => {
-                        setCameraImage(response.uri);
-                        if (response.didCancel) {
-                            console.log('User cancelled photo picker');
-                        } else if (response.error) {
-                            console.log('ImagePicker Error: ', response.error);
-                        } else {
-                            const { uri } = response;
-                            const name = uri.split('/').pop();
-                            // const ref = app.db.ref().child(`photos/${name}`);
-                            // const task = ref.putFile(uri);
-                            // task.then(() => {
-                            //     ref.getDownloadURL().then((url) => {
-                            //         db.collection('photos').add({ url });
-                            //     });
-                            // });
-                        }
+                    await launchCamera(options, (res) => {
+
+                        setCameraImage(res.uri)
+
                     })
+
+
+
                 }
             } catch (err) {
                 console.log(err, "Error Occurred")
@@ -71,8 +80,8 @@ export default function Tab2() {
 
     const openGallery = async () => {
 
-        await launchImageLibrary(options, (response) => {
-            setGalleryImage(response.uri);
+        await launchImageLibrary(options, (res) => {
+            setCameraImage(res.uri);
         })
 
     }
@@ -81,36 +90,42 @@ export default function Tab2() {
 
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-
-            <Image style={style.image} source={{ uri: cameraImage }} />
-
-            <TouchableOpacity style={{ width: 200, height: 50, borderWidth: .5, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }} onPress={openCamera}>
-                <Text>Open Camera</Text>
-            </TouchableOpacity>
+        <View style={{ flex: 1, justifyContent: 'space-between', alignItems: 'center', }}>
 
 
-            <TouchableOpacity style={{ width: 200, height: 50, borderWidth: .5, borderRadius: 10, justifyContent: 'center', alignItems: 'center', marginTop: 10 }} onPress={openGallery}>
-                <Text>Open Gallery</Text>
-            </TouchableOpacity>
+            <ScrollView>
+                <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
 
-            <Image style={style.image} source={{ uri: galleryImage }} />
+                    {photos.map(photo => (
+                        <CameraImage key={photo.id} photo={photo} options={options} />
+                    ))}
+
+                </View>
+            </ScrollView>
+
+
+            <View style={{ flex: 1, flexDirection: 'row', position: 'absolute', alignItems: 'center', marginTop: 485 }}>
+
+
+
+                <TouchableOpacity style={{ width: 100, height: 40, borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center', margin: 20, backgroundColor: '#b0e0e6' }} onPress={openCamera}>
+                    <Text>Open Camera</Text>
+                </TouchableOpacity>
+
+
+
+
+                <TouchableOpacity style={{ width: 100, height: 40, borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center', margin: 20, backgroundColor: '#b0e0e6' }} onPress={openGallery}>
+                    <Text>Open Gallery</Text>
+                </TouchableOpacity>
+
+            </View>
+
+
 
 
         </View>
     )
 }
 
-
-
-
-
-const style = StyleSheet.create({
-    image: {
-        width: 90,
-        height: 90,
-        marginBottom: 10,
-        marginTop: 10
-    },
-});
 

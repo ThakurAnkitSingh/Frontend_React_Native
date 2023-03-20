@@ -25,7 +25,6 @@ const LoginScreen = ({ navigation }) => {
         try {
 
             await signInWithEmailAndPassword(firebaseAuth, email, password);
-            // alert("Successfull Logged In")
             navigation.navigate('Tabs');
 
         }

@@ -11,7 +11,7 @@ const CalculatorScreen = () => {
     const [result, setResult] = useState('');
 
 
-    const apiUrl = 'https://render-calculator.onrender.com';
+    const apiUrl = 'https://calculator-react-native.onrender.com';
 
     const calculate = async () => {
         await axios.post(`${apiUrl}/calculate`, { num1, num2, value })
@@ -54,7 +54,7 @@ const CalculatorScreen = () => {
             <Text style={styles.label}>Operator:</Text>
 
 
-            <DropDownPicker
+            <DropDownPicker style={styles.drop}
                 open={open}
                 value={value}
                 items={items}
@@ -118,66 +118,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 30,
     },
+    drop: {
+        marginVertical: 10,
+    }
 });
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react';
-// import { View, Text, TextInput, Button } from 'react-native';
-
-// export default function Calculator() {
-//     const [num1, setNum1] = useState(0);
-//     const [num2, setNum2] = useState(0);
-//     const [operator, setOperator] = useState('+');
-//     const [result, setResult] = useState(0);
-
-//     // const calculateResult = async () => {
-//     //     const url = 'https://your-heroku-app-url.com/calculate'; // replace with your own URL
-//     //     const response = await fetch(url, {
-//     //         method: 'POST',
-//     //         headers: {
-//     //             'Content-Type': 'application/json',
-//     //         },
-//     //         body: JSON.stringify({
-//     //             num1,
-//     //             num2,
-//     //             operator,
-//     //         }),
-//     //     });
-//     //     const data = await response.json();
-//     //     setResult(data.result);
-//     // };
-
-//     return (
-//         <View>
-//             <Text>Number 1:</Text>
-//             <TextInput
-//                 keyboardType="numeric"
-//                 onChangeText={(value) => setNum1(Number(value))}
-//                 value={String(num1)}
-//             />
-
-//             <Text>Number 2:</Text>
-//             <TextInput
-//                 keyboardType="numeric"
-//                 onChangeText={(value) => setNum2(Number(value))}
-//                 value={String(num2)}
-//             />
-
-//             <Text>Operator:</Text>
-
-//             <Button title="Calculate"  />
-//             {/* onPress={calculateResult} */}
-
-//             <Text>Result: {result}</Text>
-//         </View>
-//     );
-// }
-
