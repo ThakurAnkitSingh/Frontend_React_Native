@@ -17,7 +17,7 @@ const RedButton = () => {
 
     return (
         <TouchableOpacity onPress={handlePress}>
-            <Text style={{ color: 'red', fontSize: 50 }}>Press me</Text>
+            <Text style={{ color: 'red', fontSize: 60 }}>Press me</Text>
         </TouchableOpacity>
     );
 };

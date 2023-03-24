@@ -26,7 +26,7 @@ const SigninScreen = ({ navigation }) => {
             else {
                 await createUserWithEmailAndPassword(firebaseAuth, email, password);
                 alert("Successfully Created Account");
-                navigation.navigate('Login Screen')
+                navigation.navigate('Log In Screen')
             }
 
         }
@@ -40,12 +40,13 @@ const SigninScreen = ({ navigation }) => {
         <View style={styles.container}>
 
             <Text style={styles.text}>
-                Welcome to Register Page, Please register...
+                Welcome to NordStone Register Page, Please register...
             </Text>
 
             <TextInput
                 style={styles.input}
                 placeholder="Email"
+                placeholderTextColor='black'
                 value={email}
                 onChangeText={setEmail}
                 autoCapitalize="none"
@@ -56,6 +57,7 @@ const SigninScreen = ({ navigation }) => {
             <TextInput
                 style={styles.input}
                 placeholder="Password"
+                placeholderTextColor='black'
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry={true}
@@ -79,12 +81,13 @@ const styles = StyleSheet.create({
         borderColor: "gray",
         marginVertical: 10,
         paddingHorizontal: 10,
+        color: 'black'
     },
     text: {
         textAlign: "center",
         fontSize: 25,
         marginTop: 20,
-
+        color: 'black'
     },
 });
 

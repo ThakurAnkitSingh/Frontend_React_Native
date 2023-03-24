@@ -48,8 +48,6 @@ export default function TodoList() {
                 ))}
             </View>
 
-
-
         </View>
     )
 }
@@ -62,7 +60,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
-        // flexWrap: 'wrap'
+        margin: 10,
     },
     container2: {
         flex: 1,
@@ -74,9 +72,11 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#000000',
         padding: 10,
-        // margin: 10,
+        borderColor: 'blue',
+        marginLeft: 10,
         width: '70%',
-        fontSize: 15
+        fontSize: 20,
+        color: 'black'
     },
     button: {
         backgroundColor: '#0080ff',
@@ -85,6 +85,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     text: {
-        fontSize: 20
+        margin: 10,
+        fontSize: 20,
+        color: 'black'
     }
 })

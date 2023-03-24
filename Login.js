@@ -45,15 +45,21 @@ const LoginScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
 
-            <Text style={styles.text}>
-                Welcome to Login Page, Please Login if you are existing user or Register
+            <Text style={styles.text1}>
+                Welcome to NordStone Login Page
             </Text>
+
+            <Text style={styles.text}>
+                Please Login or Register
+            </Text>
+
 
 
 
             <TextInput
                 style={styles.input}
                 placeholder="Email"
+                placeholderTextColor='black'
                 value={email}
                 onChangeText={setEmail}
                 autoCapitalize="none"
@@ -65,6 +71,7 @@ const LoginScreen = ({ navigation }) => {
             <TextInput
                 style={styles.input}
                 placeholder="Password"
+                placeholderTextColor='black'
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry={true}
@@ -77,7 +84,7 @@ const LoginScreen = ({ navigation }) => {
             </View>
 
             <Button title="Register" onPress={() => {
-                navigation.navigate('SignIn Screen');
+                navigation.navigate('Register Screen');
             }} />
 
             <TouchableOpacity onPress={forgotPassword}>
@@ -96,20 +103,29 @@ const styles = StyleSheet.create({
     input: {
         width: 200,
         height: 40,
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: "gray",
         marginVertical: 10,
         paddingHorizontal: 10,
+        color: 'black'
+    },
+    text1: {
+        textAlign: "center",
+        fontSize: 35,
+        color: 'black'
+
     },
     text: {
         textAlign: "center",
         fontSize: 25,
         marginTop: 20,
+        color: 'black'
 
     },
     textForget: {
         marginVertical: 10,
         paddingHorizontal: 10,
+        color: 'black'
     },
     btn: {
         paddingVertical: 10,

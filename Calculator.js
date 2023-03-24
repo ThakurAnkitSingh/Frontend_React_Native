@@ -85,15 +85,17 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginVertical: 10,
+        color: 'black'
     },
     input: {
         height: 40,
         width: '100%',
-        borderColor: '#ccc',
+        borderColor: 'blue',
         borderWidth: 1,
         borderRadius: 5,
         paddingHorizontal: 10,
         marginBottom: 20,
+        color: 'black'
     },
     dropdownContainer: {
         width: 200,
@@ -117,6 +119,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: 'bold',
         marginTop: 30,
+        color: 'black'
     },
     drop: {
         marginVertical: 10,

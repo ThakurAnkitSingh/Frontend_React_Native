@@ -36,16 +36,17 @@ export default function Tab2() {
             console.error('Error adding document: ', error);
         });
         setCameraImage(null);
-    }, []);
+    }, [cameraImage]);
 
 
     useEffect(() => {
-
-
         imageUrlsCollection.onSnapshot(snapshot => {
             setPhotos(snapshot.docs.map(doc => ({ id: doc.id, url: doc.data().url })))
         })
     }, []);
+
+
+
 
 
 
@@ -65,7 +66,9 @@ export default function Tab2() {
 
                     await launchCamera(options, (res) => {
 
-                        setCameraImage(res.uri)
+                        if (res.uri != null || undefined) {
+                            setCameraImage(res.uri)
+                        }
 
                     })
 
@@ -81,7 +84,9 @@ export default function Tab2() {
     const openGallery = async () => {
 
         await launchImageLibrary(options, (res) => {
-            setCameraImage(res.uri);
+            if (res.uri != null || undefined) {
+                setCameraImage(res.uri)
+            }
         })
 
     }
@@ -108,15 +113,15 @@ export default function Tab2() {
 
 
 
-                <TouchableOpacity style={{ width: 100, height: 40, borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center', margin: 20, backgroundColor: '#b0e0e6' }} onPress={openCamera}>
-                    <Text>Open Camera</Text>
+                <TouchableOpacity style={{ width: 100, height: 40, borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center', margin: 20, backgroundColor: '#b0e0e6', borderColor: 'blue' }} onPress={openCamera}>
+                    <Text style={{ color: 'black' }}>Open Camera</Text>
                 </TouchableOpacity>
 
 
 
 
-                <TouchableOpacity style={{ width: 100, height: 40, borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center', margin: 20, backgroundColor: '#b0e0e6' }} onPress={openGallery}>
-                    <Text>Open Gallery</Text>
+                <TouchableOpacity style={{ width: 100, height: 40, borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center', margin: 20, backgroundColor: '#b0e0e6', borderColor: 'blue' }} onPress={openGallery}>
+                    <Text style={{ color: 'black' }}>Open Gallery</Text>
                 </TouchableOpacity>
 
             </View>
